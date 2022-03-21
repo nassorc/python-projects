@@ -27,7 +27,7 @@ class Employee(ABC):
         """Return ssn"""
         return self._ssn
 
-    # @abstractmethod
+    @abstractmethod
     def earnings(self):
         """Calculates earning of an Employee"""
 
@@ -62,22 +62,22 @@ class SalariedEmployee(Employee):
         self._weekly_salary = salary
 
     def earnings(self):
-        """"""
+        """Return earnings of a Salaried Employee"""
         return self.weekly_salary
 
     def __repr__(self):
-        """"""
+        """Return string representation for repr()"""
         return ('SalariedEmployee:\n' +
                 super().__repr__() +
-                f'Weekly salary: ${self.weekly_salary}\n'
+                f'Weekly salary: ${self.weekly_salary}'
                 )
 
 
 class HourlyEmployee(Employee):
-    """"""
+    """Class HourlyEmployee"""
 
     def __init__(self, first, last, ssn, hours, wages):
-        """"""
+        """Initialize an HourlyEmployee object"""
         super().__init__(first, last, ssn)
         self.hours = hours
         self.wages = wages
@@ -85,37 +85,65 @@ class HourlyEmployee(Employee):
     # getters
     @property
     def hours(self):
-        """"""
+        """Return hours"""
         return self._hours
 
     @property
     def wages(self):
-        """"""
+        """Return wages"""
         return self._wages
 
     # setters
     @hours.setter
     def hours(self, hours):
-        """"""
+        """Set and validate hours"""
         if not (0 <= hours <= 168):
             raise ValueError('Hours must be in range 0 to 168')
         self._hours = hours
 
     @wages.setter
     def wages(self, wages):
-        """"""
+        """Set and validate wages"""
         if wages < 0:
             raise ValueError('Wages must be >= 0')
+        self._wages = wages
 
+    # methods
     def earnings(self):
-        """"""
-        pass
+        """Return earnings of an hourly Employee"""
+        if self.hours <= 40:
+            return self.hours*self.wages
+        O_RATE = self.wages*1.5
+        O_HOURS = self.hours - 40
+        return self.wages * 40 + O_RATE * O_HOURS
 
     def __repr__(self):
-        return 'string from hourly employee'
+        """Return string representation of repr()"""
+        return ('HourlyEmployee:\n' +
+                super().__repr__() +
+                f'Total hours (week): {self.hours}\n' +
+                f'Wages per hour: ${self.wages}'
+                )
 
 
-# person1 = Employee('Matthew', 'Crossan', 123123)
-person2 = SalariedEmployee('Matthew', 'Crossan', 1231232, 400)
-print(person2)
-# print(repr(person2))
+# main function
+def main():
+    """Test employee types"""
+    # Raises Type error
+    # person1 = Employee('Matthew', 'Crossan', 123123)
+
+    # create employee objects
+    person2 = SalariedEmployee('Matthew', 'Crossan', 1231232, 400)
+    person3 = HourlyEmployee('Tam', 'Nassorc', 5345345, 50, 15)
+
+    # add objects to employees list
+    employees = [person2, person3]
+
+    # iterate through employees and display information
+    for employee in employees:
+        print(employee)
+        print(f'Earnings: ${employee.earnings()}\n')
+
+
+# Call main function
+main()
