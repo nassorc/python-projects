@@ -127,7 +127,7 @@ class HourlyEmployee(Employee):
 
 
 # main function
-def main():
+if __name__ == '__main__':
     """Test employee types"""
     # Raises Type error
     # person1 = Employee('Matthew', 'Crossan', 123123)
@@ -143,7 +143,3 @@ def main():
     for employee in employees:
         print(employee)
         print(f'Earnings: ${employee.earnings()}\n')
-
-
-# Call main function
-main()
