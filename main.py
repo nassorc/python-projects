@@ -27,14 +27,17 @@ class Employee(ABC):
         """Return ssn"""
         return self._ssn
 
-    @abstractmethod
+    # @abstractmethod
     def earnings(self):
         """Calculates earning of an Employee"""
-        pass
 
     def __repr__(self):
         """Return string representation for repr()"""
-        pass
+        return(
+            f'First name: {self.first}\n' +
+            f'Last name: {self.last}\n' +
+            f'Social security number: {self.ssn}\n'
+        )
 
 
 class SalariedEmployee(Employee):
@@ -60,11 +63,14 @@ class SalariedEmployee(Employee):
 
     def earnings(self):
         """"""
-        pass
+        return self.weekly_salary
 
     def __repr__(self):
         """"""
-        pass
+        return ('SalariedEmployee:\n' +
+                super().__repr__() +
+                f'Weekly salary: ${self.weekly_salary}\n'
+                )
 
 
 class HourlyEmployee(Employee):
@@ -106,8 +112,10 @@ class HourlyEmployee(Employee):
         pass
 
     def __repr__(self):
-        """"""
-        pass
+        return 'string from hourly employee'
 
 
 # person1 = Employee('Matthew', 'Crossan', 123123)
+person2 = SalariedEmployee('Matthew', 'Crossan', 1231232, 400)
+print(person2)
+# print(repr(person2))
